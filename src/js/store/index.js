@@ -1,19 +1,19 @@
 import { createStore } from 'redux';
 
-//reducer
-const TUDU = (state={todos: [{id:44, text:'test44'}, {id:45, text:'test45'}]}, action) => {
+//{ todos:[ {id:42,  text: 'testing...',  completed: false} ] }
+
+const todos = (state=[{id:42,  text: 'testing...',  completed: false}], action) => {
+
   switch (action.type) {
     case 'ADD_TODO':
-      return Object.assign({}, state, {
-        todos: [
-          state.todos,
-          {
-            text: action.text,
-            id: action.id,
-            completed: false
-          }
-        ]
-      })
+      return [
+        ...state,
+        {
+          id:action.id,
+          text:action.text,
+          completed:false
+        }
+      ]
       break
     default:
       return state
@@ -21,5 +21,4 @@ const TUDU = (state={todos: [{id:44, text:'test44'}, {id:45, text:'test45'}]}, a
 }
 
 //store -- createStore method allows for getState(), subscribe(), dispatch()
-
-export default createStore(TUDU)
+export default createStore(todos)

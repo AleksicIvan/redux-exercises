@@ -23765,25 +23765,31 @@
 	var AddTodo = function AddTodo(_ref) {
 	  var dispatch = _ref.dispatch;
 	
+	  var input = void 0;
+	
 	  return _react2.default.createElement(
 	    'div',
 	    null,
 	    _react2.default.createElement(
-	      'button',
-	      { onClick: function onClick() {
-	          onTodoClick(text);
+	      'form',
+	      { onSubmit: function onSubmit(e) {
+	          e.preventDefault();
+	          if (!input.value.trim()) {
+	            return;
+	          }
+	          dispatch((0, _actions.addTodo)(input.value));
+	          input.value = '';
 	        } },
-	      'Add Todo'
+	      _react2.default.createElement('input', { ref: function ref(node) {
+	          input = node;
+	        } }),
+	      _react2.default.createElement(
+	        'button',
+	        { type: 'submit' },
+	        'Add Todo'
+	      )
 	    )
 	  );
-	};
-	
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return {
-	    onTodoClick: function onTodoClick(text) {
-	      dispatch((0, _actions.addTodo)('hard-coded'));
-	    }
-	  };
 	};
 	
 	exports.default = (0, _reactRedux.connect)()(AddTodo);
@@ -23800,14 +23806,14 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var nextTodoId = 0;
+	var nextToDo = 0;
 	
 	//action creator
 	var addTodo = exports.addTodo = function addTodo(text) {
 	  return {
 	    type: 'ADD_TODO',
-	    id: nextToDoId++,
 	    text: text,
+	    id: nextToDo++,
 	    completed: false
 	  };
 	};
@@ -23828,20 +23834,22 @@
 	
 	var _redux = __webpack_require__(/*! redux */ 180);
 	
-	//reducer
-	var TUDU = function TUDU() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? { todos: [{ id: 44, text: 'test44' }, { id: 45, text: 'test45' }] } : arguments[0];
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	//{ todos:[ {id:42,  text: 'testing...',  completed: false} ] }
+	
+	var todos = function todos() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? [{ id: 42, text: 'testing...', completed: false }] : arguments[0];
 	  var action = arguments[1];
+	
 	
 	  switch (action.type) {
 	    case 'ADD_TODO':
-	      return Object.assign({}, state, {
-	        todos: [state.todos, {
-	          text: action.text,
-	          id: action.id,
-	          completed: false
-	        }]
-	      });
+	      return [].concat(_toConsumableArray(state), [{
+	        id: action.id,
+	        text: action.text,
+	        completed: false
+	      }]);
 	      break;
 	    default:
 	      return state;
@@ -23849,8 +23857,7 @@
 	};
 	
 	//store -- createStore method allows for getState(), subscribe(), dispatch()
-	
-	exports.default = (0, _redux.createStore)(TUDU);
+	exports.default = (0, _redux.createStore)(todos);
 
 /***/ },
 /* 201 */
@@ -23877,14 +23884,16 @@
 	
 	var Todo = function Todo(_ref) {
 	  var text = _ref.text;
+	  var id = _ref.id;
 	  return _react2.default.createElement(
 	    'li',
 	    null,
-	    text
+	    id + ': ' + text
 	  );
 	};
 	
-	var ToDoList = function ToDoList(todos) {
+	var ToDoList = function ToDoList(_ref2) {
+	  var todos = _ref2.todos;
 	  return _react2.default.createElement(
 	    'ul',
 	    null,
@@ -23896,10 +23905,10 @@
 	};
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  console.log(Array.isArray(state.todos));
-	  console.log(state.todos);
+	  console.log(Array.isArray(state));
+	  console.log(state);
 	  return {
-	    todos: ToDoList(state.todos)
+	    todos: state
 	  };
 	};
 	

@@ -1,13 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-const Todo = ({ text }) => (
+const Todo = ({ text, id }) => (
   <li>
-    {text}
+    {id + ': ' + text}
   </li>
 );
 
-const ToDoList = (todos) => (
+const ToDoList = ({ todos }) => (
+
     <ul>
     {todos.map(todo => 
       <Todo key={todo.id}
@@ -15,13 +16,14 @@ const ToDoList = (todos) => (
       />    
     )}
     </ul>
+
 )
 
 const mapStateToProps = (state) => {
-  console.log(Array.isArray(state.todos))
-  console.log(state.todos)
+  console.log(Array.isArray(state))
+  console.log(state)
   return {
-    todos: ToDoList(state.todos)
+    todos: state
   }
 }
 

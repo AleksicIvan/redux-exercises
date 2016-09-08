@@ -1,11 +1,11 @@
-let nextTodoId = 0
+let nextToDo = 0
 
 //action creator
 export const addTodo = (text) => {
   return {
     type: 'ADD_TODO',
-    id: nextToDoId++,
     text,
+    id: nextToDo++,
     completed: false
   }
 }
