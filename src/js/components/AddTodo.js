@@ -4,7 +4,7 @@ import { addTodo } from '../actions'
 
 let AddTodo = ({ dispatch }) => {
   let input
-  
+
   return (
     <div>
       <form onSubmit={e => {
@@ -17,7 +17,7 @@ let AddTodo = ({ dispatch }) => {
       }}>
         <input ref={node => {
           input = node
-        }} />
+        }} /> &nbsp;
         <button type="submit">
           Add Todo
         </button>

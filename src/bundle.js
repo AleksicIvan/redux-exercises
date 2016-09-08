@@ -21416,22 +21416,26 @@
 	
 	var _AddTodo2 = _interopRequireDefault(_AddTodo);
 	
-	var _ToDoList = __webpack_require__(/*! ./ToDoList.js */ 201);
+	var _ToDoList = __webpack_require__(/*! ./ToDoList.js */ 199);
 	
 	var _ToDoList2 = _interopRequireDefault(_ToDoList);
 	
-	var _store = __webpack_require__(/*! ../store */ 200);
+	var _store = __webpack_require__(/*! ../store */ 201);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var divStyle = {
+	  color: 'red'
+	};
 	
 	var TodoApp = function TodoApp() {
 	  return _react2.default.createElement(
 	    'div',
 	    null,
 	    _react2.default.createElement(_AddTodo2.default, null),
-	    _react2.default.createElement(_ToDoList2.default, null)
+	    _react2.default.createElement(_ToDoList2.default, { style: divStyle })
 	  );
 	};
 	
@@ -23783,6 +23787,7 @@
 	      _react2.default.createElement('input', { ref: function ref(node) {
 	          input = node;
 	        } }),
+	      '  ',
 	      _react2.default.createElement(
 	        'button',
 	        { type: 'submit' },
@@ -23806,61 +23811,20 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var nextToDo = 0;
+	var nextId = 0;
 	
 	//action creator
 	var addTodo = exports.addTodo = function addTodo(text) {
 	  return {
 	    type: 'ADD_TODO',
 	    text: text,
-	    id: nextToDo++,
+	    id: nextId++,
 	    completed: false
 	  };
 	};
 
 /***/ },
-/* 199 */,
-/* 200 */
-/*!*******************************!*\
-  !*** ./src/js/store/index.js ***!
-  \*******************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _redux = __webpack_require__(/*! redux */ 180);
-	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-	
-	//{ todos:[ {id:42,  text: 'testing...',  completed: false} ] }
-	
-	var todos = function todos() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? [{ id: 42, text: 'testing...', completed: false }] : arguments[0];
-	  var action = arguments[1];
-	
-	
-	  switch (action.type) {
-	    case 'ADD_TODO':
-	      return [].concat(_toConsumableArray(state), [{
-	        id: action.id,
-	        text: action.text,
-	        completed: false
-	      }]);
-	      break;
-	    default:
-	      return state;
-	  }
-	};
-	
-	//store -- createStore method allows for getState(), subscribe(), dispatch()
-	exports.default = (0, _redux.createStore)(todos);
-
-/***/ },
-/* 201 */
+/* 199 */
 /*!***************************************!*\
   !*** ./src/js/components/ToDoList.js ***!
   \***************************************/
@@ -23880,6 +23844,10 @@
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 173);
 	
+	var _FinishButton = __webpack_require__(/*! ./FinishButton.js */ 200);
+	
+	var _FinishButton2 = _interopRequireDefault(_FinishButton);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var Todo = function Todo(_ref) {
@@ -23888,7 +23856,9 @@
 	  return _react2.default.createElement(
 	    'li',
 	    null,
-	    id + ': ' + text
+	    id + ': ' + text,
+	    '  ',
+	    _react2.default.createElement(_FinishButton2.default, null)
 	  );
 	};
 	
@@ -23913,6 +23883,133 @@
 	};
 	
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(ToDoList);
+
+/***/ },
+/* 200 */
+/*!*******************************************!*\
+  !*** ./src/js/components/FinishButton.js ***!
+  \*******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 167);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var FinishButton = function (_React$Component) {
+	  _inherits(FinishButton, _React$Component);
+	
+	  function FinishButton() {
+	    _classCallCheck(this, FinishButton);
+	
+	    var _this = _possibleConstructorReturn(this, (FinishButton.__proto__ || Object.getPrototypeOf(FinishButton)).call(this));
+	
+	    _this.state = {
+	      finished: false
+	    };
+	    _this.handleClick = _this.handleClick.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(FinishButton, [{
+	    key: 'handleClick',
+	    value: function handleClick() {
+	      this.setState({
+	        finished: !this.state.finished
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var text = this.state.finished ? 'finished' : 'not finished';
+	      return _react2.default.createElement(
+	        'button',
+	        { style: { backgroundColor: this.state.finished ? 'green' : 'red' }, onClick: this.handleClick },
+	        text
+	      );
+	    }
+	  }]);
+	
+	  return FinishButton;
+	}(_react2.default.Component);
+	
+	exports.default = FinishButton;
+
+/***/ },
+/* 201 */
+/*!*******************************!*\
+  !*** ./src/js/store/index.js ***!
+  \*******************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _redux = __webpack_require__(/*! redux */ 180);
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	//{ todos:[ {id:42,  text: 'testing...',  completed: false} ] }
+	
+	var todos = function todos() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+	  var action = arguments[1];
+	
+	
+	  switch (action.type) {
+	    case 'ADD_TODO':
+	      return [].concat(_toConsumableArray(state), [{
+	        id: action.id,
+	        text: action.text,
+	        completed: false
+	      }]);
+	      break;
+	    default:
+	      return state;
+	  }
+	};
+	
+	// const incId = (state=[{lastId:0}], action) => {
+	
+	//   switch (action.type) {
+	//     case 'ADD_TODO':
+	//       return [
+	//         ...state,
+	//         {
+	//           lastId: lastId + 1  
+	//         }
+	//       ]
+	//       break
+	//     default:
+	//       return state
+	//   }
+	// }  
+	
+	// const todoApp = combineReducers({
+	//   todos,
+	//   incId
+	// })
+	
+	//store -- createStore method allows for getState(), subscribe(), dispatch()
+	exports.default = (0, _redux.createStore)(todos);
 
 /***/ }
 /******/ ]);

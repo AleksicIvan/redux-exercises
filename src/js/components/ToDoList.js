@@ -1,9 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import FinishButton from './FinishButton.js'
 
 const Todo = ({ text, id }) => (
   <li>
-    {id + ': ' + text}
+    {id + ': ' + text} &nbsp;
+    <FinishButton />
   </li>
 );
 
@@ -23,7 +25,7 @@ const mapStateToProps = (state) => {
   console.log(Array.isArray(state))
   console.log(state)
   return {
-    todos: state
+    todos: state,
   }
 }
 
